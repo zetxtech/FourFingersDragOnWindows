@@ -32,7 +32,7 @@
 
         <tb:TaskbarIcon
             x:Name="TaskbarIcon"
-            ToolTipText="Click to open ThreeFingersDragOnWindows' settings window."
+            ToolTipText="Click to open FourFingersDragOnWindows' settings window."
             IconSource="ms-appx:///Assets/icon.ico"
             MenuActivation="RightClick"
             NoLeftClickDelay="True"

@@ -10,6 +10,9 @@ public class MouseOperations {
     public const int MOUSEEVENTF_LEFTUP = 0x0004;
     public const int MOUSEEVENTF_RIGHTDOWN = 0x0008;
     public const int MOUSEEVENTF_RIGHTUP = 0x0010;
+    public const int MOUSEEVENTF_MIDDLEDOWN = 0x0020;
+    public const int MOUSEEVENTF_MIDDLEUP = 0x0040;
+
 
     // moving the cursor does not work with floating point values
     // decimal parts are kept and then added to be taken in account

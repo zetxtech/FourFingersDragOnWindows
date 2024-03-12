@@ -31,19 +31,19 @@ public class ThreeFingersDrag {
 
         Debug.WriteLine("    fingers: " + fingersCount + ", original: " + originalFingersCount + ", moving: " + shortDelayMovingFingersCount + "/" + longDelayMovingFingersCount + ", dist: " + longestDist2D);
 
-        if(fingersCount >= 3 && areContactsIdsCommons && longDelayMovingFingersCount == 3 && originalFingersCount == 3 && !_isDragging){
+        if(fingersCount >= 4 && areContactsIdsCommons && longDelayMovingFingersCount == 4 && originalFingersCount == 4 && !_isDragging){
             // Start dragging
             _isDragging = true;
             Debug.WriteLine("    START DRAG, Left click down");
-            MouseOperations.MouseClick(MouseOperations.MOUSEEVENTF_LEFTDOWN);
+            MouseOperations.MouseClick(MouseOperations.MOUSEEVENTF_MIDDLEDOWN);
 
-        }else if((shortDelayMovingFingersCount < 2 || (originalFingersCount != 3 && originalFingersCount >= 2)) && _isDragging){
+        }else if((shortDelayMovingFingersCount < 3 || (originalFingersCount != 4 && originalFingersCount >= 3)) && _isDragging){
             // Stop dragging
             // Condition over originalFingersCount to catch cases where the drag has continued with only two or four fingers
             Debug.WriteLine("    STOP DRAG, Left click up");
             StopDrag();
             
-        }else if(fingersCount >= 2 && originalFingersCount == 3 && areContactsIdsCommons && _isDragging){
+        }else if(fingersCount >= 3 && originalFingersCount == 4 && areContactsIdsCommons && _isDragging){
             // Dragging
             if(App.SettingsData.ThreeFingersDragCursorMove){
                 Debug.WriteLine("    MOVING, (x, y) = (" + longestDistDelta.x + ", " + longestDistDelta.y + ")");
@@ -67,7 +67,7 @@ public class ThreeFingersDrag {
 
     private void StopDrag(){
         _isDragging = false;
-        MouseOperations.MouseClick(MouseOperations.MOUSEEVENTF_LEFTUP);
+        MouseOperations.MouseClick(MouseOperations.MOUSEEVENTF_MIDDLEUP);
     }
 
     private int GetReleaseDelay(){
