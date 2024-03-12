@@ -25,7 +25,7 @@
             
             <Border Height="44" Margin="12,0,0,0">
                 <TextBlock
-                    Text="FourFingersDragOnWindows"
+                    Text="Three + Four Fingers Drag On Windows"
                     FontSize="14"
                     FontWeight="Medium"
                     TextWrapping="NoWrap"
@@ -60,14 +60,18 @@
                 <Thickness x:Key="NavigationViewHeaderMargin">20,20,0,20</Thickness>
             </NavigationView.Resources>
 
-
             <NavigationView.MenuItems>
                 <NavigationViewItem Content="Touchpad" Tag="Touchpad" x:Name="Touchpad">
                     <NavigationViewItem.Icon>
                         <FontIcon Glyph="&#xEFA5;" />
                     </NavigationViewItem.Icon>
                 </NavigationViewItem>
-                <NavigationViewItem Content="Four Fingers Drag" Tag="ThreeFingersDrag" x:Name="ThreeFingersDrag">
+                <NavigationViewItem Content="Three Fingers Drag" Tag="ThreeFingersDrag" x:Name="ThreeFingersDrag">
+                    <NavigationViewItem.Icon>
+                        <FontIcon Glyph="&#xE759;" />
+                    </NavigationViewItem.Icon>
+                </NavigationViewItem>
+                <NavigationViewItem Content="Four Fingers Drag" Tag="FourFingersDrag" x:Name="FourFingersDrag">
                     <NavigationViewItem.Icon>
                         <FontIcon Glyph="&#xE759;" />
                     </NavigationViewItem.Icon>

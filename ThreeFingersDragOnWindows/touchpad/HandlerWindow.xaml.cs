@@ -13,6 +13,7 @@ public sealed partial class HandlerWindow : Window {
     private readonly App _app;
     private readonly ContactsManager _contactsManager;
     private readonly ThreeFingersDrag _threeFingersDrag;
+    private readonly FourFingersDrag _fourFingersDrag;
 
     public bool TouchpadInitialized; // Became true when the touchpad check is done, but does not confirm that the touchpad has been registered, see TouchpadRegistered
     public bool TouchpadExists;
@@ -25,6 +26,7 @@ public sealed partial class HandlerWindow : Window {
         _app = app;
         _contactsManager = new ContactsManager(this);
         _threeFingersDrag = new ThreeFingersDrag();
+        _fourFingersDrag = new FourFingersDrag();
 
         // Let the _handlerWindow to be defined in App.xaml.cs before initializing the source
         var queue = Microsoft.UI.Dispatching.DispatcherQueue.GetForCurrentThread();
@@ -85,7 +87,10 @@ public sealed partial class HandlerWindow : Window {
         if(App.SettingsData.ThreeFingersDrag){
             _threeFingersDrag.OnTouchpadContact(_oldContacts, contacts, Ctms() - _lastContactCtms);
         }
-        
+        if(App.SettingsData.FourFingersDrag){
+            _fourFingersDrag.OnTouchpadContact(_oldContacts, contacts, Ctms() - _lastContactCtms);
+        }
+
         _app.OnTouchpadContact(contacts); // Transfer to App for displaying contacts in SettingsWindow
         _lastContactCtms = Ctms();
         _oldContacts = contacts;

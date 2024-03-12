@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Windows.ApplicationModel;
 using Microsoft.Win32.TaskScheduler;
+using Microsoft.Win32;
 
 namespace ThreeFingersDragOnWindows.utils; 
 
@@ -11,16 +12,16 @@ public static class StartupManager {
 
 
     public static void EnableElevatedStartup(){
-        _ = DisableUnelevatedStartup();
+        DisableUnelevatedStartup();
         
         Debug.WriteLine("Enabling elevated startup task...");
         
         using TaskService taskService = new TaskService();
-        TaskFolder folder = taskService.RootFolder.CreateFolder("ThreeFingersDragOnWindows", null, false);
+        TaskFolder folder = taskService.RootFolder.CreateFolder("FourFingersDragOnWindows", null, false);
         folder.AllTasks.ToList().ForEach(task => folder.DeleteTask(task.Name, false));
 
         TaskDefinition taskDefinition = taskService.NewTask();
-        taskDefinition.RegistrationInfo.Description = "Starting ThreeFingersDragOnWindows on system startup with elevated privileges.";
+        taskDefinition.RegistrationInfo.Description = "Starting FourFingersDragOnWindows on system startup with elevated privileges.";
         taskDefinition.RegistrationInfo.Author = "Clément Grennerat";
         taskDefinition.Principal.RunLevel = TaskRunLevel.Highest;
 
@@ -42,40 +43,37 @@ public static class StartupManager {
         Debug.WriteLine("Disabling elevated startup task...");
         
         using TaskService taskService = new TaskService();
-        TaskFolder folder = taskService.RootFolder.CreateFolder("ThreeFingersDragOnWindows", null, false);
+        TaskFolder folder = taskService.RootFolder.CreateFolder("FourFingersDragOnWindows", null, false);
         folder.AllTasks.ToList().ForEach(task => folder.DeleteTask(task.Name, false));
-        taskService.RootFolder.DeleteFolder("ThreeFingersDragOnWindows", false);
+        taskService.RootFolder.DeleteFolder("FourFingersDragOnWindows", false);
     }
     public static bool IsElevatedStartupOn(){
         using TaskService taskService = new TaskService();
-        return taskService.RootFolder.SubFolders.Any(folder => folder.Name == "ThreeFingersDragOnWindows" && folder.Tasks.Count != 0);
+        return taskService.RootFolder.SubFolders.Any(folder => folder.Name == "FourFingersDragOnWindows" && folder.Tasks.Count != 0);
     }
-    
-    
-    public static async Task<bool> EnableUnelevatedStartup(){
-        Debug.WriteLine("Enabling unelevated startup task...");
-        
-        StartupTask startupTask = await StartupTask.GetAsync("ThreeFingersDragOnWindows");
-        startupTask.Disable();
-        
-        
-        switch (startupTask.State)
+
+    public static void EnableUnelevatedStartup(){
+        using (RegistryKey key = Registry.CurrentUser.OpenSubKey("SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Run", true))
         {
-            case StartupTaskState.Disabled:
-                StartupTaskState newState = await startupTask.RequestEnableAsync();
-                Debug.WriteLine("Request to enable startup, result = {0}", newState);
-                break;
+            key.SetValue("FourFingersDragOnWindows", "\"" + Utils.GetAppPath() + "\"");
         }
-        return startupTask.State is StartupTaskState.Enabled or StartupTaskState.EnabledByPolicy;
     }
-    public static async Task<bool> DisableUnelevatedStartup(){
-        Debug.WriteLine("Disabling unelevated startup task...");
-        StartupTask startupTask = await StartupTask.GetAsync("ThreeFingersDragOnWindows");
-        startupTask.Disable();
-        return startupTask.State is StartupTaskState.Disabled or StartupTaskState.DisabledByUser or StartupTaskState.DisabledByPolicy;
+    public static void DisableUnelevatedStartup(){
+        using (RegistryKey key = Registry.CurrentUser.OpenSubKey("SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Run", true))
+        {
+            key.DeleteValue("FourFingersDragOnWindows", false);
+        }
     }
-    public static async Task<StartupTaskState> GetUnelevatedStartupStatus(){
-        StartupTask startupTask = await StartupTask.GetAsync("ThreeFingersDragOnWindows");
-        return startupTask.State;
+    public static bool IsUnelevatedStartupOn(){
+        using (RegistryKey key = Registry.CurrentUser.OpenSubKey("SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Run", false))
+        {
+            object value = key.GetValue("FourFingersDragOnWindows");
+            if (value != null)
+            {
+                string registryPath = value.ToString().Replace("\"", "");
+                return String.Equals(Utils.GetAppPath(), registryPath, StringComparison.InvariantCultureIgnoreCase);
+            }
+        }
+        return false;
     }
 }

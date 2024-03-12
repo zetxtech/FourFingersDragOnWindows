@@ -7,8 +7,7 @@ using ThreeFingersDragOnWindows.utils;
 
 namespace ThreeFingersDragOnWindows.threefingersdrag;
 
-public class ThreeFingersDrag
-{
+public class FourFingersDrag {
 
     public const int RELEASE_FINGERS_THRESHOLD_MS = 30; // Windows Precision Touchpad sends contacts about every 10ms
 
@@ -16,15 +15,13 @@ public class ThreeFingersDrag
     private readonly FingersCounter _fingersCounter = new();
     private readonly Timer _dragEndTimer = new();
     private bool _isDragging;
-
-    public ThreeFingersDrag()
-    {
+    
+    public FourFingersDrag(){
         _dragEndTimer.AutoReset = false;
         _dragEndTimer.Elapsed += OnTimerElapsed;
     }
 
-    public void OnTouchpadContact(TouchpadContact[] oldContacts, TouchpadContact[] contacts, long elapsed)
-    {
+    public void OnTouchpadContact(TouchpadContact[] oldContacts, TouchpadContact[] contacts, long elapsed){
         bool hasFingersReleased = elapsed > RELEASE_FINGERS_THRESHOLD_MS;
         Debug.WriteLine("\nTFD: " + string.Join(", ", oldContacts.Select(c => c.ToString())) + " | " + string.Join(", ", contacts.Select(c => c.ToString())) + " | " + elapsed);
         bool areContactsIdsCommons = FingersCounter.AreContactsIdsCommons(oldContacts, contacts);
@@ -34,30 +31,24 @@ public class ThreeFingersDrag
 
         Debug.WriteLine("    fingers: " + fingersCount + ", original: " + originalFingersCount + ", moving: " + shortDelayMovingFingersCount + "/" + longDelayMovingFingersCount + ", dist: " + longestDist2D);
 
-        if (fingersCount >= 3 && areContactsIdsCommons && longDelayMovingFingersCount == 3 && originalFingersCount == 3 && !_isDragging)
-        {
+        if(fingersCount >= 4 && areContactsIdsCommons && longDelayMovingFingersCount == 4 && originalFingersCount == 4 && !_isDragging){
             // Start dragging
             _isDragging = true;
             Debug.WriteLine("    START DRAG, Left click down");
-            MouseOperations.MouseClick(MouseOperations.MOUSEEVENTF_LEFTDOWN);
+            MouseOperations.MouseClick(MouseOperations.MOUSEEVENTF_MIDDLEDOWN);
 
-        }
-        else if ((shortDelayMovingFingersCount < 2 || (originalFingersCount != 3 && originalFingersCount >= 2)) && _isDragging)
-        {
+        }else if((shortDelayMovingFingersCount < 3 || (originalFingersCount != 4 && originalFingersCount >= 3)) && _isDragging){
             // Stop dragging
             // Condition over originalFingersCount to catch cases where the drag has continued with only two or four fingers
             Debug.WriteLine("    STOP DRAG, Left click up");
             StopDrag();
-
-        }
-        else if (fingersCount >= 2 && originalFingersCount == 3 && areContactsIdsCommons && _isDragging)
-        {
+            
+        }else if(fingersCount >= 3 && originalFingersCount == 4 && areContactsIdsCommons && _isDragging){
             // Dragging
-            if (App.SettingsData.ThreeFingersDragCursorMove)
-            {
+            if(App.SettingsData.FourFingersDragCursorMove){
                 Debug.WriteLine("    MOVING, (x, y) = (" + longestDistDelta.x + ", " + longestDistDelta.y + ")");
 
-                Point delta = DistanceManager.ApplySpeedAndAcc(longestDistDelta, (int)elapsed);
+                Point delta = DistanceManager.ApplySpeedAndAcc(longestDistDelta, (int) elapsed);
                 MouseOperations.ShiftCursorPosition(delta.x, delta.y);
 
                 _dragEndTimer.Stop();
@@ -67,25 +58,21 @@ public class ThreeFingersDrag
         }
     }
 
-    private void OnTimerElapsed(object source, ElapsedEventArgs e)
-    {
-        if (_isDragging)
-        {
+    private void OnTimerElapsed(object source, ElapsedEventArgs e){
+        if(_isDragging){
             Debug.WriteLine("    STOP DRAG FROM TIMER, Left click up");
             StopDrag();
         }
     }
 
-    private void StopDrag()
-    {
+    private void StopDrag(){
         _isDragging = false;
-        MouseOperations.MouseClick(MouseOperations.MOUSEEVENTF_LEFTUP);
+        MouseOperations.MouseClick(MouseOperations.MOUSEEVENTF_MIDDLEUP);
     }
 
-    private int GetReleaseDelay()
-    {
+    private int GetReleaseDelay(){
         // Delay after which the click is released if no input is detected
-        return App.SettingsData.ThreeFingersDragAllowReleaseAndRestart ? Math.Max(App.SettingsData.ThreeFingersDragReleaseDelay, RELEASE_FINGERS_THRESHOLD_MS) : RELEASE_FINGERS_THRESHOLD_MS;
+        return App.SettingsData.FourFingersDragAllowReleaseAndRestart ? Math.Max(App.SettingsData.FourFingersDragReleaseDelay, RELEASE_FINGERS_THRESHOLD_MS) : RELEASE_FINGERS_THRESHOLD_MS;
     }
 
 }

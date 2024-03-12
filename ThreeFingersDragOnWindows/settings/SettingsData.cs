@@ -20,12 +20,21 @@ public class SettingsData {
     public int ThreeFingersDragReleaseDelay{ get; set; } = 500;
 
     public bool ThreeFingersDragCursorMove{ get; set; } = true;
-    public float ThreeFingersDragCursorSpeed{ get; set; } = 30;
-    public float ThreeFingersDragCursorAcceleration{ get; set; } = 1;
-    
-    
+    public float ThreeFingersDragCursorSpeed{ get; set; } = 100;
+    public float ThreeFingersDragCursorAcceleration{ get; set; } = 2.5F;
+
+    // Four fingers drag Settings
+    public bool FourFingersDrag { get; set; } = true;
+
+    public bool FourFingersDragAllowReleaseAndRestart { get; set; } = true;
+    public int FourFingersDragReleaseDelay { get; set; } = 500;
+
+    public bool FourFingersDragCursorMove { get; set; } = true;
+    public float FourFingersDragCursorSpeed { get; set; } = 40;
+    public float FourFingersDragCursorAcceleration { get; set; } = 1.5F;
+
     // Other settings
-    
+
     public enum StartupActioType {
         NONE,
         ENABLE_ELEVATED_RUN_WITH_STARTUP,
@@ -65,10 +74,10 @@ public class SettingsData {
     }
 
     private static string getPath(bool createIfEmpty){
-        var dirPath = ApplicationData.Current.LocalFolder.Path;
+        var appDataPath = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData);
+        var dirPath = Path.Combine(appDataPath, "FourFingersDragOnWindows");
         var filePath = Path.Combine(dirPath, "preferences.xml");
-
-        if(!Directory.Exists(dirPath) || !File.Exists(filePath)){
+        if (!Directory.Exists(dirPath) || !File.Exists(filePath)){
             Debug.WriteLine("First run: creating settings file");
             Directory.CreateDirectory(dirPath);
             IsFirstRun = true;

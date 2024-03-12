@@ -1,13 +1,17 @@
-[![Microsoft Store Badge](https://img.shields.io/badge/Microsoft%20Store-005FB8?logo=microsoftstore&logoColor=fff&style=flat)](https://apps.microsoft.com/detail/9MSX91WQCM2V?)
-[![Release](https://img.shields.io/github/v/release/clementgre/ThreeFingersDragOnWindows?label=Download%20version)](https://github.com/clementgre/ThreeFingersDragOnWindows/releases/latest)
-[![TotalDownloads](https://img.shields.io/github/downloads/clementgre/ThreeFingersDragOnWindows/total)](https://github.com/clementgre/ThreeFingersDragOnWindows/releases/latest)
-[![LatestDownloads](https://img.shields.io/github/downloads/clementgre/ThreeFingersDragOnWindows/latest/total)](https://github.com/clementgre/ThreeFingersDragOnWindows/releases/latest)
+[![Release](https://img.shields.io/github/v/release/jackzzs/FourFingersDragOnWindows?label=Download%20version)](https://github.com/jackzzs/FourFingersDragOnWindows/releases/latest)
+[![TotalDownloads](https://img.shields.io/github/downloads/jackzzs/FourFingersDragOnWindows/total)](https://github.com/jackzzs/FourFingersDragOnWindows/releases/latest)
+[![LatestDownloads](https://img.shields.io/github/downloads/jackzzs/FourFingersDragOnWindows/latest/total)](https://github.com/jackzzs/FourFingersDragOnWindows/releases/latest)
 
-## Overview
+## Overview and fork description
+This program can bring the macOS-style three-finger dragging functionality to Windows computers, to select text or perform other selecting operations.
 
-The goal of ThreeFingersDragOnWindows is to bring the macOS-style three-finger dragging functionality to Windows Precision touchpads.
+You can also optionally implement middle-button dragging using four fingers.
 
-This allow to drag windows and select text (drag the cursor with left click pressed) with a simple.
+Forked from [ClementGre/ThreeFingersDragOnWindows](https://github.com/ClementGre/ThreeFingersDragOnWindows), and mainly adds support for four-finger middle-button dragging on its basis, out of the need for middle-button dragging as a commonly used view rotation operation in many programs, especially games and 3D software.
+
+Thanks to the original author for bringing such a good software.
+
+This fork follows the MIT License used by the original author.
 
 ## Preview
 <p align="center">
@@ -18,14 +22,16 @@ This allow to drag windows and select text (drag the cursor with left click pres
 
 ## Installation
 
+Download the zip package from [Github Release](https://github.com/jackzzs/FourFingersDragOnWindows/releases and run ""
+
 If the installation fails, your computer might need to have the Windows App SDK redistributable installed. You can download it from this page: [https://learn.microsoft.com/en-us/windows/apps/windows-app-sdk/downloads](https://learn.microsoft.com/en-us/windows/apps/windows-app-sdk/downloads).
 
 ## How to use
 
-Make sure to disable the "Tap twice and drag to multi-select" behaviour and all of the defaults 3-finger swipe behaviour
+Make sure to disable the "Tap twice and drag to multi-select" behaviour and all of the defaults 3-finger and 4-finger swipe behaviour
 via ``Touchpad settings`` in windows preferences for the drag to work without interferences.
 
-To open the configuration pane, click the ThreeFingersDragOnWindows tray icon on the Windows task bar.
+To open the configuration pane, click the FourFingersDragOnWindows tray icon on the Windows task bar.
 
 ## Build and Execute
 

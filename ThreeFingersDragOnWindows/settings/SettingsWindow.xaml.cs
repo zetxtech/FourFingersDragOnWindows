@@ -46,7 +46,11 @@ public sealed partial class SettingsWindow {
         }if(e.SelectedItem.Equals(ThreeFingersDrag)){
             sender.Header = "Three Fingers Drag";
             ContentFrame.Navigate(typeof(ThreeFingersDragSettings));
-            
+
+        } else if (e.SelectedItem.Equals(FourFingersDrag)){
+            sender.Header = "Four Fingers Drag";
+            ContentFrame.Navigate(typeof(FourFingersDragSettings));
+
         } else if(e.SelectedItem.Equals(OtherSettings)){
             sender.Header = "Other Settings";
             ContentFrame.Navigate(typeof(OtherSettings));

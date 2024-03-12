@@ -55,7 +55,7 @@
 
                 <uap3:Extension Category="windows.appExecutionAlias" EntryPoint="Windows.FullTrustApplication">
                     <uap3:AppExecutionAlias>
-                        <desktop:ExecutionAlias Alias="ThreeFingersDragOnWindows.exe" />
+                        <desktop:ExecutionAlias Alias="FourFingersDragOnWindows.exe" />
                     </uap3:AppExecutionAlias>
                 </uap3:Extension>
 
@@ -63,7 +63,7 @@
                     <uap:Protocol Name="threefingersdragonwindows"/>
                 </uap:Extension>
 
-                <desktop:Extension Category="windows.startupTask" Executable="ThreeFingersDragOnWindows.exe"
+                <desktop:Extension Category="windows.startupTask" Executable="FourFingersDragOnWindows.exe"
                                    EntryPoint="Windows.FullTrustApplication">
                     <desktop:StartupTask TaskId="ThreeFingersDragOnWindows" Enabled="true" DisplayName="FourFingersDragOnWindows" />
                 </desktop:Extension>

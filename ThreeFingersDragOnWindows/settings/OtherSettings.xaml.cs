@@ -72,8 +72,14 @@ public sealed partial class OtherSettings {
             }
             UpdateStartupStatus();
         }else{
-            if(DoRunAtStartup) StartupManager.EnableUnelevatedStartup().ContinueWith(_ => DispatcherQueue.TryEnqueue(UpdateStartupStatus));
-            else StartupManager.DisableUnelevatedStartup().ContinueWith(_ => DispatcherQueue.TryEnqueue(UpdateStartupStatus));
+            if (DoRunAtStartup)
+            {
+                StartupManager.EnableUnelevatedStartup();
+            }
+            else
+            {
+                StartupManager.DisableUnelevatedStartup();
+            }
         }
     }
 
@@ -109,41 +115,16 @@ public sealed partial class OtherSettings {
 
         // Unelevated startup task
         ElevatedStartupInformation.Visibility = Visibility.Collapsed;
-        StartupManager.GetUnelevatedStartupStatus().ContinueWith(task => {
-            DispatcherQueue.TryEnqueue(() => {
-                switch (task.Result)
-                {
-                    case StartupTaskState.Enabled:
-                        StartupStatus.Title = "The app is currently set to run at startup.";
-                        StartupStatus.Severity = InfoBarSeverity.Success;
-                        break;
-                    case StartupTaskState.Disabled:
-                        StartupStatus.Title = "The app is currently not set to run at startup.";
-                        StartupStatus.Severity = InfoBarSeverity.Informational;
-                        doTurnOnStartupToggle = false;
-                        break;
-                    case StartupTaskState.DisabledByUser:
-                        StartupStatus.Title = "The app can't run at startup because the startup task was disabled in the tasks manager. You can re-enable it there and then reload this page.";
-                        StartupStatus.Severity = InfoBarSeverity.Warning;
-                        doTurnOnStartupToggle = false;
-                        doDisableStartupToggle = true;
-                        break;
-                    case StartupTaskState.EnabledByPolicy:
-                        StartupStatus.Title = "The app startup task is enabled by a group policy. You can still setup an elevated startup task enabling the app to run as administrator.";
-                        StartupStatus.Severity = InfoBarSeverity.Warning;
-                        doTurnOnStartupToggle = false;
-                        break;
-                    case StartupTaskState.DisabledByPolicy:
-                        StartupStatus.Title = "The app startup task is disabled by a group policy. You can still setup an elevated startup task enabling the app to run as administrator.";
-                        StartupStatus.Severity = InfoBarSeverity.Error;
-                        doTurnOnStartupToggle = false;
-                        doDisableStartupToggle = true;
-                        break;
-                }
-                DoRunAtStartup = doTurnOnStartupToggle;
-                if(RunAtStartup.IsEnabled != !doDisableStartupToggle) RunAtStartup.IsEnabled = !doDisableStartupToggle;
-            });
-        });
+        if (StartupManager.IsUnelevatedStartupOn()) {
+            StartupStatus.Title = "The app is currently set to run at startup.";
+            StartupStatus.Severity = InfoBarSeverity.Success;
+        } else{
+            StartupStatus.Title = "The app is currently not set to run at startup.";
+            StartupStatus.Severity = InfoBarSeverity.Informational;
+            doTurnOnStartupToggle = false;
+        }
+        DoRunAtStartup = doTurnOnStartupToggle;
+        if (RunAtStartup.IsEnabled != !doDisableStartupToggle) RunAtStartup.IsEnabled = !doDisableStartupToggle;
     }
     
     
@@ -164,7 +145,7 @@ public sealed partial class OtherSettings {
                     setRunElevatedProperty(false); // The settings will be changed after the restart, with the settings StartupAction
                     
                     if(!App.RestartElevated(SettingsData.StartupActioType.ENABLE_ELEVATED_RUN_WITH_STARTUP)){
-                        StartupManager.DisableUnelevatedStartup().ContinueWith(_ => DispatcherQueue.TryEnqueue(UpdateStartupStatus));
+                        StartupManager.DisableUnelevatedStartup();
                         RunElevated.IsOn = true;
                     }
                 } else{
@@ -181,11 +162,11 @@ public sealed partial class OtherSettings {
             }
         }else if(DoRunAtStartup){
             if(RunElevated.IsOn){
-                StartupManager.DisableUnelevatedStartup().ContinueWith(_ => DispatcherQueue.TryEnqueue(UpdateStartupStatus));
+                StartupManager.DisableUnelevatedStartup();
                 StartupManager.EnableElevatedStartup();
             } else{
                 StartupManager.DisableElevatedStartup();
-                StartupManager.EnableUnelevatedStartup().ContinueWith(_ => DispatcherQueue.TryEnqueue(UpdateStartupStatus));
+                StartupManager.EnableUnelevatedStartup();
             }
         }
         UpdateStartupStatus();

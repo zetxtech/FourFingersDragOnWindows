@@ -4,7 +4,7 @@ using System.Diagnostics;
 ProcessStartInfo processInfo = new ProcessStartInfo
 {
     UseShellExecute = true,
-    FileName = "ThreeFingersDragOnWindows.exe",
+    FileName = "FourFingersDragOnWindows.exe",
     Arguments = "FromElevator"
 };
 try{
