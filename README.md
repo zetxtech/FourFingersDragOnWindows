@@ -11,16 +11,16 @@ This fork follows the MIT License used by the original author.
 
 ## Preview
 <p align="center">
-  <img src='https://raw.githubusercontent.com/ClementGre/ThreeFingersDragOnWindows/main/ThreeFingersDragOnWindows/Assets/Screenshot-1.png' alt="App screenshot: Touchpad tab" width='700'>
-  <img src='https://raw.githubusercontent.com/ClementGre/ThreeFingersDragOnWindows/main/ThreeFingersDragOnWindows/Assets/Screenshot-2.png' alt="App screenshot: Three Fingers Drag tab" width='700'>
-  <img src='https://raw.githubusercontent.com/ClementGre/ThreeFingersDragOnWindows/main/ThreeFingersDragOnWindows/Assets/Screenshot-3.png' alt="App screenshot: Other Settings tab" width='700'>
+  <img src='https://raw.githubusercontent.com/ClementGre/ThreeFingerDragOnWindows/main/ThreeFingerDragOnWindows/Assets/Screenshot-1.png' alt="App screenshot: Touchpad tab" width='700'>
+  <img src='https://raw.githubusercontent.com/ClementGre/ThreeFingerDragOnWindows/main/ThreeFingerDragOnWindows/Assets/Screenshot-1.png' alt="App screenshot: Three Fingers Drag tab" width='700'>
+  <img src='https://raw.githubusercontent.com/ClementGre/ThreeFingerDragOnWindows/main/ThreeFingerDragOnWindows/Assets/Screenshot-1.png' alt="App screenshot: Other Settings tab" width='700'>
 </p>
 
 ## Installation
 
-Download the zip package from [Github Release](https://github.com/jackzzs/FourFingersDragOnWindows/releases and run ""
+Download the zip package from [Github Release](https://github.com/jackzzs/FourFingersDragOnWindows/releases) and run "FourFingersDragOnWindows.exe"
 
-If the installation fails, your computer might need to have the Windows App SDK redistributable installed. You can download it from this page: [https://learn.microsoft.com/en-us/windows/apps/windows-app-sdk/downloads](https://learn.microsoft.com/en-us/windows/apps/windows-app-sdk/downloads).
+If the program fails, your computer might need to have the Windows App SDK redistributable installed. You can download it from this page: [https://learn.microsoft.com/en-us/windows/apps/windows-app-sdk/downloads](https://learn.microsoft.com/en-us/windows/apps/windows-app-sdk/downloads).
 
 ## How to use
 
